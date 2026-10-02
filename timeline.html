@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2027 秋 · 八所游戏研究生第一轮语言时间轴</title>
+<style>
+  :root {
+    --bg: #f3efe6;
+    --paper: #fffdf8;
+    --ink: #1c1915;
+    --muted: #5c564c;
+    --line: #ddd4c6;
+    --rust: #9a3412;
+    --rust-bg: #fde8dc;
+    --teal: #0f4c5c;
+    --teal-bg: #e5f2f4;
+    --gold: #8a5a12;
+    --gold-bg: #f8edd8;
+    --green: #3f6212;
+    --green-bg: #e8f3d8;
+    --shadow: 0 1px 0 rgba(28, 25, 21, 0.04);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(1200px 400px at 10% -10%, #efe4cf 0%, transparent 60%),
+      var(--bg);
+    color: var(--ink);
+    font-family: "WenQuanYi Micro Hei", "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    line-height: 1.55;
+    font-size: 16px;
+  }
+  a { color: var(--teal); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 32px 20px 80px; }
+  header.top { margin-bottom: 28px; }
+  .kicker {
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 700;
+    margin: 0 0 8px;
+  }
+  h1 {
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.15;
+    margin: 0 0 12px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .lede { font-size: 18px; max-width: 46rem; margin: 0; color: var(--ink); }
+  .meta { color: var(--muted); font-size: 13px; margin-top: 10px; }
+  nav.jump {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin: 22px 0 8px;
+  }
+  nav.jump a {
+    text-decoration: none;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: var(--ink);
+  }
+  nav.jump a:hover { border-color: var(--teal); color: var(--teal); }
+
+  .callout {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--rust);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 22px 0;
+    box-shadow: var(--shadow);
+  }
+  .callout h2 { margin: 0 0 8px; font-size: 18px; }
+  .callout p { margin: 0 0 8px; }
+  .callout p:last-child { margin: 0; }
+
+  .urgent {
+    background: var(--rust-bg);
+    border: 1px solid #f0c2ae;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin: 16px 0 28px;
+  }
+  .urgent strong { color: var(--rust); }
+
+  h2.sec {
+    font-size: 22px;
+    margin: 36px 0 12px;
+    padding-top: 8px;
+  }
+  .note { color: var(--muted); font-size: 14px; margin: 0 0 14px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--paper);
+    border-radius: 12px;
+    overflow: hidden;
+    font-size: 14px;
+    box-shadow: var(--shadow);
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  th {
+    background: #1c1915;
+    color: #f6f1e7;
+    font-weight: 650;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+  tr:last-child td { border-bottom: 0; }
+  td.num { white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 700; }
+  .scroll { overflow-x: auto; border-radius: 12px; border: 1px solid var(--line); }
+
+  .tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .tag.grad { background: var(--teal-bg); color: var(--teal); }
+  .tag.no { background: var(--rust-bg); color: var(--rust); }
+  .tag.exam { background: var(--teal-bg); color: var(--teal); }
+  .tag.due { background: var(--rust-bg); color: var(--rust); }
+  .tag.later { background: #eeeae3; color: #444; }
+  .tag.win { background: var(--gold-bg); color: var(--gold); }
+  .tag.today { background: var(--ink); color: #fff; }
+
+  .months { display: flex; flex-direction: column; gap: 18px; }
+  .month {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .month h3 {
+    margin: 0;
+    padding: 12px 16px;
+    background: #f7f3ea;
+    border-bottom: 1px solid var(--line);
+    font-size: 16px;
+  }
+  .ev {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .ev:last-child { border-bottom: 0; }
+  .ev time {
+    font-variant-numeric: tabular-nums;
+    font-weight: 800;
+    color: var(--ink);
+  }
+  .ev .what { margin: 0; }
+  .ev .sub { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+  .wk { color: var(--muted); font-weight: 600; font-size: 12px; margin-left: 4px; }
+
+  .cards { display: flex; flex-direction: column; gap: 16px; }
+  article.school {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px 14px;
+  }
+  article.school h3 { margin: 8px 0 4px; font-size: 20px; }
+  .degree { margin: 0; color: var(--muted); font-size: 14px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 14px 0;
+  }
+  .stat {
+    background: #f7f3ea;
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .stat .lbl { display: block; font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+  .stat .val { font-weight: 800; font-variant-numeric: tabular-nums; }
+  .stat .hint { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .verdict { margin: 0; font-size: 15px; }
+  details { margin-top: 8px; }
+  summary { cursor: pointer; color: var(--teal); font-size: 14px; }
+  details p { margin: 8px 0 0; font-size: 14px; color: var(--ink); }
+
+  .formula {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+  .formula ul { margin: 8px 0 0; padding-left: 18px; }
+  footer.src { margin-top: 28px; font-size: 13px; color: var(--muted); }
+  footer.src ul { padding-left: 18px; }
+  @media (max-width: 800px) {
+    .grid { grid-template-columns: 1fr; }
+    .ev { grid-template-columns: 72px 1fr; }
+    th:nth-child(5), td:nth-child(5) { display: none; }
+  }
+  @media print {
+    body { background: #fff; }
+    nav.jump { display: none; }
+    .month, article.school, table { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <p class="kicker">Fall 2027 · Graduate only</p>
+    <h1>八所游戏研究生，第一轮语言时间轴</h1>
+    <p class="lede">下面 8 个都是硕士或 MFA。时间全部按 2027 年秋季入学、并且赶上各校第一轮来排。语言成绩的最晚到达日，就是这一轮还认这笔托福的最后一天。</p>
+    <p class="meta">页面基准日：2026 年 10 月 2 日。托福按 2026 年 1 月 21 日之后的新考试计算：考后约 3 天出分。</p>
+  </header>
+
+  <nav class="jump">
+    <a href="#rule">补交怎么算</a>
+    <a href="#table">一览表</a>
+    <a href="#axis">按月时间轴</a>
+    <a href="#schools">分校</a>
+    <a href="#how">考试日怎么推</a>
+  </nav>
+
+  <section class="callout" id="rule">
+    <h2>你说的补交，第一轮里没有学校认</h2>
+    <p>补交指的是：第一轮截止前，除语言以外的材料都交了；等这一轮的截止日期过了，再送托福。同一轮里面先交别的、截止前再补上成绩，不算这种补交。</p>
+    <p>按各校现在写在官网上的规则，截止日之后才送到的托福，进不了该轮审理。有下一轮的学校，这笔成绩会落到下一轮；没有下一轮的，这一季就过了。</p>
+    <p>两个容易看错的窗口，仍然不是“过了第一轮再开一轮”：纽约大学没有第二轮，交表之后 30 天内必须收到官方成绩，过了这 30 天就没有下一轮。罗切斯特理工的 priority 看的是 2 月 1 日前档案里有没有自报分；官方成绩可以录取后再交，但那是已经考出分数的人，不是截止后才去考。</p>
+  </section>
+
+  <div class="urgent">
+    <strong>杜克第一轮最紧。</strong>
+    官方成绩要在 2026 年 11 月 3 日到达。按电子送分 10 个工作日反推，最晚 10 月 17 日（周六）考试，而且考试当天晚上 10 点（美东）前要把杜克加进送分名单。10 月 17 日没有重考余地。想留一周缓冲，就在 10 月 10 日考。
+  </div>
+
+  <h2 class="sec" id="table">第一轮一览</h2>
+  <p class="note">“最晚考试”按考后 3 天出分，再加 10 个工作日电子送分，刚好卡在第一轮到达日。东北大学官网写官方成绩最长约 6 周，所以它的最晚考试日用 6 周，不用 3 周。犹他大学成绩和申请匹配还要大约 15 个工作日，表里单独写了含匹配的考试日。</p>
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>项目</th>
+          <th>学位</th>
+          <th>第一轮语言最晚到达</th>
+          <th>赶上这一轮的最晚考试</th>
+          <th>托福线（旧 / 新）</th>
+          <th>截止后才送托福</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Duke GDDI</td>
+          <td><span class="tag grad">MEng</span></td>
+          <td class="num">2026-11-03</td>
+          <td class="num">2026-10-17</td>
+          <td>90 / 5</td>
+          <td>进不了第一轮。材料在 1 月 19 日前到齐，才算第二轮。</td>
+        </tr>
+        <tr>
+          <td>SMU Guildhall</td>
+          <td><span class="tag grad">MIT</span></td>
+          <td class="num">2026-12-01</td>
+          <td class="num">2026-11-14</td>
+          <td>约 iBT 80</td>
+          <td>进不了提前批。到齐后按滚动审，下一档是 2 月 15 日。</td>
+        </tr>
+        <tr>
+          <td>NYU Game Center</td>
+          <td><span class="tag grad">MFA</span></td>
+          <td class="num">交表 12-01<br>官方分 12-31</td>
+          <td class="num">自报：11-14<br>只赶 30 天窗口：12-14</td>
+          <td>无硬线，约 100+</td>
+          <td>没有第二轮。12 月 1 日交表后，官方分最晚 12 月 31 日到。</td>
+        </tr>
+        <tr>
+          <td>Utah MEAE<br>Game Design</td>
+          <td><span class="tag grad">MEAE</span></td>
+          <td class="num">2026-12-15</td>
+          <td class="num">含匹配：11-07<br>只算送到：11-28</td>
+          <td>高于 100</td>
+          <td>进不了。12 月 15 日是唯一截止，截止后不能再改材料。</td>
+        </tr>
+        <tr>
+          <td>USC Games<br>CS Game Development</td>
+          <td><span class="tag grad">MS</span></td>
+          <td class="num">2026-12-15<br>奖学金轮</td>
+          <td class="num">2026-11-28</td>
+          <td>录取无最低分<br>免分班 90 / 4.5</td>
+          <td>进不了奖学金轮。官方分若在 1 月 15 日前到，只赶上最终截止。</td>
+        </tr>
+        <tr>
+          <td>CMU ETC</td>
+          <td><span class="tag grad">MET</span></td>
+          <td class="num">开审 01-15<br>收齐 02-01</td>
+          <td class="num">开审前：12-19<br>卡 2 月 1 日：01-15</td>
+          <td>92 各 23<br>或各项 5.0</td>
+          <td>没有第二轮。2 月 1 日之后不收。</td>
+        </tr>
+        <tr>
+          <td>RIT GDD</td>
+          <td><span class="tag grad">MS</span></td>
+          <td class="num">2027-02-01<br>自报分</td>
+          <td class="num">2027-01-29</td>
+          <td>88 / 4.5</td>
+          <td>进不了 priority。2 月 1 日之后是有名额再审。</td>
+        </tr>
+        <tr>
+          <td>Northeastern GSD</td>
+          <td><span class="tag grad">MS</span></td>
+          <td class="num">2027-02-01</td>
+          <td class="num">2026-12-21</td>
+          <td>100 / 5</td>
+          <td>进不了奖学金优先轮。国际生最终截止是 5 月 1 日。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="sec" id="axis">按月时间轴</h2>
+  <p class="note">青色是考试，红色是这一轮还认语言成绩的日子，灰色是错过第一轮之后的下一档。今天是 10 月 2 日。</p>
+  <div class="months">
+
+    <section class="month">
+      <h3>2026 年 10 月</h3>
+      <div class="ev">
+        <time>10-02<span class="wk">五</span></time>
+        <div>
+          <p class="what"><span class="tag today">今天</span> 时间轴从这里开始。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>10-10<span class="wk">六</span></time>
+        <div>
+          <p class="what"><span class="tag exam">考试</span> Duke 更稳的考试日。</p>
+          <p class="sub">出分约 10 月 13 日，10 个工作日送分约 10 月 27 日到，赶在 11 月 3 日前。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>10-17<span class="wk">六</span></time>
+        <div>
+          <p class="what"><span class="tag exam">最晚考试</span> Duke 第一轮。</p>
+          <p class="sub">出分约 10 月 20 日，慢档电子送分刚好 11 月 3 日到。当天必须把机构码 5156 加进送分名单。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="month">
+      <h3>2026 年 11 月</h3>
+      <div class="ev">
+        <time>11-03<span class="wk">二</span></time>
+        <div>
+          <p class="what"><span class="tag due">到达截止</span> Duke 第一轮。语言和其他材料都要到齐，这一轮才审。</p>
+          <p class="sub">这一天之后才到的托福，不算第一轮。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>11-07<span class="wk">六</span></time>
+        <div>
+          <p class="what"><span class="tag exam">最晚考试</span> Utah，把“送到后再匹配约 15 个工作日”算进去。</p>
+          <p class="sub">约 11 月 24 日送到，匹配卡在 12 月 15 日。申请表要先交，匹配才开始计时。这一天也适合作为 USC 奖学金轮的提前考试日。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>11-14<span class="wk">六</span></time>
+        <div>
+          <p class="what"><span class="tag exam">最晚考试</span> SMU 提前批，以及 NYU 想在交表时就能自报分数。</p>
+          <p class="sub">出分约 11 月 17 日，送到约 12 月 1 日。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>11-21<span class="wk">六</span></time>
+        <div>
+          <p class="what"><span class="tag exam">建议考试</span> USC 奖学金轮。比数学最晚日早一周，避开感恩节当周。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>11-26<span class="wk">四</span></time>
+        <div>
+          <p class="what"><span class="tag later">假期</span> 美国感恩节。11 月 28 日那场最晚考试，送分可能被假期拖慢。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>11-28<span class="wk">六</span></time>
+        <div>
+          <p class="what"><span class="tag exam">数学最晚</span> USC 奖学金轮；Utah 若只算“送到”、不算匹配。</p>
+          <p class="sub">送到约 12 月 15 日。Utah 的匹配多半来不及，所以 Utah 不要把这天当成可执行的最晚考试日。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="month">
+      <h3>2026 年 12 月</h3>
+      <div class="ev">
+        <time>12-01<span class="wk">二</span></time>
+        <div>
+          <p class="what"><span class="tag due">到达截止</span> SMU 提前批。材料不齐不审。</p>
+          <p class="what"><span class="tag due">交表截止</span> NYU MFA。Tisch 这一季写的是 12 月 1 日。</p>
+          <p class="sub">NYU 可以在交表时自报，官方成绩还要在交表后 30 天内到。SMU 这一天之后才到的语言成绩，提前批不审。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>12-14<span class="wk">一</span></time>
+        <div>
+          <p class="what"><span class="tag exam">最晚考试</span> NYU，只在“12 月 1 日已交表、用满 30 天官方分窗口”时成立。</p>
+          <p class="sub">送到约 12 月 31 日。圣诞周可能更慢。想稳妥，12 月 5 日或 12 月 12 日考。没有第二轮。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>12-15<span class="wk">二</span></time>
+        <div>
+          <p class="what"><span class="tag due">到达截止</span> Utah 全部材料，含语言。截止后不能再改。</p>
+          <p class="what"><span class="tag due">到达截止</span> USC 奖学金轮。这一轮的官方托福也要在这一天前到，档案才算齐。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>12-19<span class="wk">六</span></time>
+        <div>
+          <p class="what"><span class="tag exam">建议考试</span> Northeastern 奖学金优先轮；CMU 想在 1 月 15 日开审时档案已经齐。</p>
+          <p class="sub">东北大学按官网“最长约 6 周”反推，整 6 周是 12 月 21 日。12 月 19 日是这之前的周六。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>12-21<span class="wk">一</span></time>
+        <div>
+          <p class="what"><span class="tag exam">最晚考试</span> Northeastern，按学校自己写的 6 周，不是按 3 周送分。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>12-31<span class="wk">四</span></time>
+        <div>
+          <p class="what"><span class="tag due">到达截止</span> NYU 官方成绩。前提是 12 月 1 日已经交表，30 天从交表日起算。</p>
+          <p class="sub">12 月 31 日之后到的官方分，这一季 MFA 没有下一轮可去。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="month">
+      <h3>2027 年 1 月</h3>
+      <div class="ev">
+        <time>01-15<span class="wk">五</span></time>
+        <div>
+          <p class="what"><span class="tag later">下一档</span> USC 最终截止。12 月 15 日之后才到的官方托福，只可能停在这一档，不回到奖学金轮。</p>
+          <p class="what"><span class="tag due">开审</span> CMU。委员会 1 月 15 日之后开始审已经到齐的档案。</p>
+          <p class="what"><span class="tag exam">数学最晚</span> CMU 若只求 2 月 1 日前送到。跨元旦，实际应更早。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>01-19<span class="wk">二</span></time>
+        <div>
+          <p class="what"><span class="tag later">第二轮</span> Duke。11 月 3 日之后才到的托福，要在这一天前到齐，才进入第二轮，而不是补进第一轮。</p>
+          <p class="sub">赶上第二轮的最晚考试约 1 月 2 日。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>01-23<span class="wk">六</span></time>
+        <div>
+          <p class="what"><span class="tag exam">建议考试</span> RIT priority。自报分约 1 月 26 日出，2 月 1 日前填进门户。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>01-29<span class="wk">五</span></time>
+        <div>
+          <p class="what"><span class="tag exam">最晚考试</span> RIT。出分约 2 月 1 日，当天把自报分写进申请或门户，才算 priority 档案到齐。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="month">
+      <h3>2027 年 2 月到 5 月 · 第一轮截止，以及错过之后的下一档</h3>
+      <div class="ev">
+        <time>02-01<span class="wk">一</span></time>
+        <div>
+          <p class="what"><span class="tag due">到达截止</span> RIT priority：自报分要在档案里。官方分可以录取后、开学前再交。</p>
+          <p class="what"><span class="tag due">到达截止</span> Northeastern 奖学金优先轮：官网要求官方成绩，申请收到时分数仍须有效。</p>
+          <p class="what"><span class="tag due">收齐</span> CMU 材料最后一天，含官方托福、成绩单、推荐信。2 月 1 日之后不收。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>02-15<span class="wk">一</span></time>
+        <div>
+          <p class="what"><span class="tag later">下一档</span> SMU regular。提前批之后才到齐的申请，滚到这一档。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>03-15<span class="wk">一</span></time>
+        <div>
+          <p class="what"><span class="tag later">下一档</span> SMU extended。CMU 录取通知约在 3 月 15 日门户公布。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>03-17<span class="wk">三</span></time>
+        <div>
+          <p class="what"><span class="tag later">第三轮</span> Duke。第二轮也没赶上的，材料要在这一天前到齐。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>04-15<span class="wk">四</span></time>
+        <div>
+          <p class="what"><span class="tag later">最终</span> SMU Guildhall 硕士申请最后一天。</p>
+        </div>
+      </div>
+      <div class="ev">
+        <time>05-01<span class="wk">六</span></time>
+        <div>
+          <p class="what"><span class="tag later">最终</span> Northeastern 国际生。2 月 1 日之后才到的官方托福，奖学金优先轮已经过了，只能算这一档，而且学校写送分可能要 6 周，考试还要再往前推。</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <h2 class="sec" id="schools">分校：学位、第一轮、截止后才交会去哪</h2>
+  <div class="cards">
+
+    <article class="school" id="duke">
+      <span class="tag grad">研究生 · Master of Engineering</span>
+      <h3>Duke · Game Design, Development &amp; Innovation</h3>
+      <p class="degree">Pratt 的 MEng，不是本科。2027 秋校园硕士三轮：11 月 3 日、1 月 19 日、3 月 17 日。</p>
+      <div class="grid">
+        <div class="stat"><span class="lbl">第一轮语言最晚到达</span><span class="val">2026-11-03</span><span class="hint">官方成绩，不收个人复印件</span></div>
+        <div class="stat"><span class="lbl">最晚考试</span><span class="val">2026-10-17</span><span class="hint">更稳：10 月 10 日</span></div>
+        <div class="stat"><span class="lbl">分数</span><span class="val">旧 90 / 新 5</span><span class="hint">工学院更希望多邻国。用托福录取后，入学前通常还要再考多邻国</span></div>
+      </div>
+      <p class="verdict"><span class="tag no">进不了第一轮</span> 11 月 3 日之后才到的托福，这一轮不审。研究生院会把迟到的官方分补进档案，但工学院写明：某一轮的材料必须在该轮截止前到齐。下一轮是 1 月 19 日。</p>
+      <details>
+        <summary>依据</summary>
+        <p>Pratt 2026–27 公告：申请要等每一项都到了才算完整，而且必须在该轮截止前完整，才会按该轮审理。研究生院语言页：2026 年 1 月 21 日前一般不低于 iBT 90，当天及以后不低于 5。代码 5156。</p>
+      </details>
+    </article>
+
+    <article class="school" id="smu">
+      <span class="tag grad">研究生 · Master of Interactive Technology</span>
+      <h3>SMU Guildhall · Game Development</h3>
+      <p class="degree">硕士 MIT。本科 BA in Game Development 走的是另一套本科申请，下面的日期不是本科的。</p>
+      <div class="grid">
+        <div class="stat"><span class="lbl">提前批语言最晚到达</span><span class="val">2026-12-01</span><span class="hint">不齐不审</span></div>
+        <div class="stat"><span class="lbl">最晚考试</span><span class="val">2026-11-14</span><span class="hint">下一档 regular：2 月 15 日</span></div>
+        <div class="stat"><span class="lbl">分数</span><span class="val">纸考 550 / 机考 80</span><span class="hint">机考已停，这句话应按 iBT 约 80 理解。官网还没写成 1–6 分，交之前最好再问招生办</span></div>
+      </div>
+      <p class="verdict"><span class="tag no">进不了提前批</span> 12 月 1 日之后才到的托福，提前批不审。档案到齐后滚动审理，下一档截止日期是 2 月 15 日，其后还有 3 月 15 日和 4 月 15 日。</p>
+      <details>
+        <summary>依据</summary>
+        <p>硕士清单写明：非可选材料到齐之前不审。国际生托福或雅思为必交（没有英语授课学位时）。每年 9 月 1 日开放下一秋的申请，所以本季提前批是 2026 年 12 月 1 日。页面上“copies are acceptable”修饰的是可选的 GRE 等，不是明确允许托福空着。</p>
+      </details>
+    </article>
+
+    <article class="school" id="nyu">
+      <span class="tag grad">研究生 · MFA</span>
+      <h3>NYU Game Center · MFA in Game Design</h3>
+      <p class="degree">Tisch 两年制 MFA。本科 BFA 的截止是 2026-11-01、2027-01-01、2027-01-05，本页不用这些日期。</p>
+      <div class="grid">
+        <div class="stat"><span class="lbl">申请截止</span><span class="val">2026-12-01</span><span class="hint">只有这一轮</span></div>
+        <div class="stat"><span class="lbl">官方分最晚到达</span><span class="val">交表后 30 天</span><span class="hint">12 月 1 日交表，则 12 月 31 日</span></div>
+        <div class="stat"><span class="lbl">最晚考试</span><span class="val">11-14 或 12-14</span><span class="hint">11 月 14 日：交表时已有分。12 月 14 日：只用满 30 天窗口</span></div>
+      </div>
+      <p class="verdict"><span class="tag win">同一轮的 30 天，不是第二轮</span> 可以先交表、后收官方分，但时钟从交表那天起只有 30 天。12 月 31 日之后没有下一轮。有竞争力的旧托福大约 100+，没有硬性最低分。接受 MyBest。代码 9633。</p>
+      <details>
+        <summary>依据</summary>
+        <p>Tisch 研究生招生把 Game Design MFA 列在 12 月 1 日。Game Center 申请要求表写 MFA Application：December 1, 2026。项目旧页仍残留上一季“Fall 2026 / December 1, 2025”，另一处又写“一月第一周，日期待定”。本页采用已经写明年份的 2026-12-01。国际生页：可自报并上传非官方成绩，官方成绩必须在提交申请后 30 天内收到。</p>
+      </details>
+    </article>
+
+    <article class="school" id="utah">
+      <span class="tag grad">研究生 · MEAE</span>
+      <h3>Utah · Entertainment Arts &amp; Engineering，Game Design</h3>
+      <p class="degree">硕士。官网写明 Applications for Fall 2027 are open，只收秋季。本科 BS in Games 不是这个截止。</p>
+      <div class="grid">
+        <div class="stat"><span class="lbl">语言最晚到达</span><span class="val">2026-12-15</span><span class="hint">唯一截止，不提前审</span></div>
+        <div class="stat"><span class="lbl">最晚考试</span><span class="val">2026-11-07</span><span class="hint">含匹配。只算送到、不算匹配是 11 月 28 日，来不及匹配</span></div>
+        <div class="stat"><span class="lbl">分数</span><span class="val">高于 100</span><span class="hint">雅思至少 7.0，多邻国 130。新分制项目页还没改</span></div>
+      </div>
+      <p class="verdict"><span class="tag no">没有下一轮</span> 12 月 15 日之后才到的托福，这一季不收。作品集和其他材料截止后也不能再改。学校只认考试机构直送的官方语言成绩；同类研究生流程里，申请提交并且分数送到之后，匹配大约还要 10 到 15 个工作日。表要先交，匹配才开始。</p>
+      <details>
+        <summary>依据</summary>
+        <p>MEAE 招生页：2027 秋已开放；12 月 15 日截止；所有材料截止前交齐；截止后不能更新。国际生页：项目要求 iBT 高于 100，代码 4853。工程学院同类说明写国际生申请要等官方语言成绩匹配上才算完整。</p>
+      </details>
+    </article>
+
+    <article class="school" id="usc">
+      <span class="tag grad">研究生 · MS</span>
+      <h3>USC Games · MS in Computer Science, Game Development</h3>
+      <p class="degree">工学院硕士。电影学院另有一个 Game Design and Development MS，截止写的是 11 月 15 日，那是另一个研究生项目，不在这条时间轴里。</p>
+      <div class="grid">
+        <div class="stat"><span class="lbl">奖学金轮语言最晚到达</span><span class="val">2026-12-15</span><span class="hint">档案要等官方电子分到了才算齐</span></div>
+        <div class="stat"><span class="lbl">最晚考试</span><span class="val">2026-11-28</span><span class="hint">建议 11 月 21 日，避开感恩节</span></div>
+        <div class="stat"><span class="lbl">分数</span><span class="val">录取不设全校最低分</span><span class="hint">免入学英语分班：旧 90 且单项 20；新 4.5 且单项 4。不收多邻国</span></div>
+      </div>
+      <p class="verdict"><span class="tag no">进不了奖学金轮</span> 托福栏可以先空着交表，但国际生档案要等官方电子成绩到了才完整。12 月 15 日之后、1 月 15 日之前到的官方分，只赶上最终截止。Games 总页目前只写工学院 12 月 15 日且逾期不受理，和工学院项目页的 1 月 15 日最终截止不一致。赶第一轮就按 12 月 15 日准备。代码 4852。</p>
+      <details>
+        <summary>依据</summary>
+        <p>Viterbi 的 MS CS Game Development 页：Fall 奖学金考虑 12 月 15 日，最终截止 1 月 15 日。Viterbi FAQ：语言栏可以空着提交，提交后仍可补；官方成绩从考试机构电子送达之前，申请不算完整。研究生院：列出的托福分用于分班，不是全校录取线。</p>
+      </details>
+    </article>
+
+    <article class="school" id="cmu">
+      <span class="tag grad">研究生 · Master of Entertainment Technology</span>
+      <h3>CMU ETC · MET</h3>
+      <p class="degree">只有这个硕士，没有对应本科。没有分轮。</p>
+      <div class="grid">
+        <div class="stat"><span class="lbl">语言最晚到达</span><span class="val">2027-02-01</span><span class="hint">1 月 15 日之后开始审已到齐的档案</span></div>
+        <div class="stat"><span class="lbl">最晚考试</span><span class="val">开审前 12-19</span><span class="hint">只卡 2 月 1 日：1 月 15 日，会撞元旦</span></div>
+        <div class="stat"><span class="lbl">分数</span><span class="val">各项 5.0</span><span class="hint">旧考试：总分 92，单项各 23。新考试四项都要 5.0，比旧的单项 23 更紧</span></div>
+      </div>
+      <p class="verdict"><span class="tag win">1 月 15 日到 2 月 1 日仍是同一轮</span> 网申可以先交，官方托福收到 2 月 1 日为止。1 月 15 日之后才到的成绩，仍然可以在 2 月 1 日前把档案补齐，只是赶不上“开审时已经齐”的那一批。2 月 1 日之后不收。母语不是英语不能免考。代码 2074。</p>
+      <details>
+        <summary>依据</summary>
+        <p>ETC 招生页：全部列出的材料到齐才算完整；成绩单、官方考试成绩和推荐信收到 2 月 1 日；委员会 1 月 15 日之后开始审；3 月 15 日放榜。页面没印年份，按 2027 秋这一季理解为 2027 年 1 月和 2 月。2026 年 1 月及以后的托福：总分 5.0，听读写说各 5.0。</p>
+      </details>
+    </article>
+
+    <article class="school" id="rit">
+      <span class="tag grad">研究生 · MS</span>
+      <h3>RIT · Game Design and Development</h3>
+      <p class="degree">全日制 MS，秋季入学。本科 BS Game Design and Development 不是这个 2 月 1 日。</p>
+      <div class="grid">
+        <div class="stat"><span class="lbl">priority 最晚要有自报分</span><span class="val">2027-02-01</span><span class="hint">官方分可在录取后、开学前交</span></div>
+        <div class="stat"><span class="lbl">最晚考试</span><span class="val">2027-01-29</span><span class="hint">建议 1 月 23 日，出分后立刻自报</span></div>
+        <div class="stat"><span class="lbl">分数</span><span class="val">88 / 4.5</span><span class="hint">单项建议各 22。低于线有条件录取的可能。不接受 MyBest</span></div>
+      </div>
+      <p class="verdict"><span class="tag no">进不了 priority</span> 第一轮看的是 2 月 1 日前申请算不算完整。自报分可以写在申请里，也可以提交后在门户补，但要赶在 2 月 1 日前。2 月 1 日之后才考出来的分数，priority 已经过了，后面是有名额再审。代码 2760。</p>
+      <details>
+        <summary>依据</summary>
+        <p>MS 项目页：Full-time，Fall，February 1 priority deadline, rolling thereafter。招生说明：priority 截止前到齐的申请优先考虑录取和资助；自报的英语成绩可以在提交后的门户里补；若录取，官方英语成绩在第一学期开学前作为录取条件提交。</p>
+      </details>
+    </article>
+
+    <article class="school" id="neu">
+      <span class="tag grad">研究生 · MS</span>
+      <h3>Northeastern · Game Science and Design</h3>
+      <p class="degree">硕士。招生由艺术、媒体与设计学院（CAMD）收。Khoury 页面也写明这个项目的招生归 CAMD，不是本科。</p>
+      <div class="grid">
+        <div class="stat"><span class="lbl">优先轮语言最晚到达</span><span class="val">2027-02-01</span><span class="hint">要官方成绩，学校写最长约 6 周</span></div>
+        <div class="stat"><span class="lbl">最晚考试</span><span class="val">2026-12-21</span><span class="hint">按 6 周，不是按 3 周。周六可在 12 月 19 日</span></div>
+        <div class="stat"><span class="lbl">分数</span><span class="val">旧 100 / 新 5</span><span class="hint">雅思 7.0，多邻国 130。代码 3682</span></div>
+      </div>
+      <p class="verdict"><span class="tag no">进不了 2 月 1 日优先轮</span> 优先轮要的是完整申请。2 月 1 日之后才到的官方托福，奖学金优先考虑已经过了。国际生还能交到 5 月 1 日，但那是最终截止，不是把第一轮补上。CAMD 没有写“可以先交申请、后补托福”。</p>
+      <details>
+        <summary>依据</summary>
+        <p>项目页：奖学金优先 2 月 1 日，国际生最终 5 月 1 日。CAMD：2026 年 1 月 21 日前 iBT 100，当天及以后总分 5；官方成绩由考试机构直送；成绩在申请收到时必须仍有效；送分可能长达 6 周。2 月 1 日前交齐的申请才有奖学金优先。</p>
+      </details>
+    </article>
+  </div>
+
+  <h2 class="sec" id="how">最晚考试日怎么来的</h2>
+  <div class="formula">
+    <p>2026 年 1 月 21 日及以后的托福，成绩大约考后 3 天出现在 ETS 账户。电子送分再加 4 到 10 个工作日，看学校用哪种接收方式。本页取慢的一档：10 个工作日。所以大多数学校的最晚考试日 = 到达截止日往前推「3 天 + 10 个工作日」。</p>
+    <ul>
+      <li>考试当天美东时间晚 10 点前，要把学校加进免费送分名单。过后补送会再晚一截，最晚考试日就作废。</li>
+      <li>东北大学自己写了最长约 6 周，最晚考试日改按 2 月 1 日往前 6 周，即 12 月 21 日。</li>
+      <li>犹他大学除了送到，还要和已提交的申请匹配，同类流程写 10 到 15 个工作日。含匹配的最晚考试日是 11 月 7 日。</li>
+      <li>罗切斯特理工的 priority 用自报分，不要求官方分在 2 月 1 日前送到。最晚考试日只留出 3 天出分，即 1 月 29 日。</li>
+      <li>感恩节（11 月 26 日）、圣诞和元旦可能让送分比 10 个工作日更慢。卡在这些节日后面的“数学最晚日”，页面上另给了更早的建议考试日。</li>
+    </ul>
+  </div>
+
+  <footer class="src">
+    <p>主要页面（2026-10-02 查阅）：</p>
+    <ul>
+      <li><a href="https://masters.pratt.duke.edu/apply/deadlines/">Duke 工学院截止日期</a> · <a href="https://prattprofessional.bulletins.duke.edu/policies/admissions">完整申请才进该轮</a> · <a href="https://gradschool.duke.edu/admissions/application-instructions/english-language-proficiency-test-scores/">语言分数</a></li>
+      <li><a href="https://www.smu.edu/guildhall/admission/admission-requirements">SMU Guildhall 硕士要求</a></li>
+      <li><a href="https://tisch.nyu.edu/admissions/graduate-admissions">Tisch 研究生截止</a> · <a href="https://tisch.nyu.edu/game-center/application-requirements">MFA 12 月 1 日</a> · <a href="https://tisch.nyu.edu/admissions/graduate-admissions/Internationalapplicantrequirements">交表后 30 天</a></li>
+      <li><a href="https://games.utah.edu/prospective-students/master-of-entertainment-arts-and-engineering/admissions-information/">Utah MEAE 2027 秋</a> · <a href="https://games.utah.edu/international-student-application-information/">高于 100</a></li>
+      <li><a href="https://viterbigradadmission.usc.edu/programs/masters/msprograms/computer-science/ms-cs-game-development/">USC MS CS Game Development</a> · <a href="https://games.usc.edu/graduate-applications">USC Games 总页</a></li>
+      <li><a href="https://etc.cmu.edu/admissions">CMU ETC</a></li>
+      <li><a href="https://www.rit.edu/study/game-design-and-development-ms">RIT MS</a> · <a href="https://www.rit.edu/admissions/graduate/apply">自报分与官方分</a></li>
+      <li><a href="https://camd.northeastern.edu/graduate-admissions/">Northeastern CAMD</a> · <a href="https://graduate.northeastern.edu/programs/ms-game-science-and-design/master-of-science-in-game-science-and-design/">项目截止</a></li>
+      <li><a href="https://www.ets.org/toefl/test-takers/ibt/scores/get-scores.html">ETS 出分与送分时间</a></li>
+    </ul>
+  </footer>
+</div>
+</body>
+</html>
